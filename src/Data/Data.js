@@ -1,5 +1,16 @@
 import { faker } from "@faker-js/faker";
-import { ChatCircleDots, Phone, User } from "phosphor-react";
+import { Title } from "@mui/icons-material";
+import {
+  Camera,
+  ChatCircleDots,
+  File,
+  Gear,
+  Image,
+  Phone,
+  SignOut,
+  Sticker,
+  User,
+} from "phosphor-react";
 import React from "react";
 
 export const Nav_Butons = [
@@ -167,4 +178,27 @@ export const Chat_History = [
     incoming: false,
     outgoing: true,
   },
+];
+
+export const Actions = [
+  { color: "#4da5fe", icon: <Image size={24} />, y: 102, title: "Photo/Video" },
+  { color: "#1b8cfe", icon: <Sticker size={24} />, y: 172, title: "Stickers" },
+  { color: "#0172e4", icon: <Camera size={24} />, y: 242, title: "Image" },
+  { color: "#0159b2", icon: <File size={24} />, y: 312, title: "Document" },
+  { color: "#013f7f", icon: <User size={24} />, y: 382, title: "Contact" },
+];
+
+export const Message_Options = [
+  { title: "Reply" },
+  { title: "React to message" },
+  { title: "Forword message" },
+  { title: "Star message" },
+  { title: "Report" },
+  { title: "Delete Message" },
+];
+
+export const User_Profile = [
+  { title: "Profile", icon: <User /> },
+  { title: "Settings", icon: <Gear /> },
+  { title: "Logout", icon: <SignOut /> },
 ];

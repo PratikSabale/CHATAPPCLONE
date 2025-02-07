@@ -3,12 +3,15 @@ import {
   Divider,
   IconButton,
   Link,
+  Menu,
+  MenuItem,
   Stack,
   Typography,
   useTheme,
 } from "@mui/material";
-import { DownloadSimple, Image } from "phosphor-react";
+import { DotsThreeVertical, DownloadSimple, Image } from "phosphor-react";
 import React from "react";
+import { Message_Options } from "../Data/Data";
 
 const Docmsg = ({ el }) => {
   const theme = useTheme();
@@ -49,6 +52,7 @@ const Docmsg = ({ el }) => {
           </Typography>
         </Stack>
       </Box>
+      <MessageMenu />
     </Stack>
   );
 };
@@ -101,6 +105,7 @@ const Linkmsg = ({ el }) => {
           </Stack>
         </Stack>
       </Box>
+      <MessageMenu />
     </Stack>
   );
 };
@@ -144,6 +149,7 @@ const Replymsg = ({ el }) => {
           </Typography>
         </Stack>
       </Box>
+      <MessageMenu />
     </Stack>
   );
 };
@@ -172,6 +178,7 @@ const Imgmsg = ({ el }) => {
           </Typography>
         </Stack>
       </Box>
+      <MessageMenu />
     </Stack>
   );
 };
@@ -197,6 +204,7 @@ const Textmsg = ({ el }) => {
           {el.message}
         </Typography>
       </Box>
+      <MessageMenu />
     </Stack>
   );
 };
@@ -218,4 +226,47 @@ const Timeline = ({ el }) => {
   );
 };
 
-export { Timeline, Textmsg, Imgmsg, Replymsg, Linkmsg, Docmsg };
+const MessageMenu = () => {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  return (
+    <>
+      <DotsThreeVertical
+        size={20}
+        id="basic-button"
+        aria-controls={open ? "basic-menu" : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? "true" : undefined}
+        onClick={handleClick}
+      />
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          "aria-labelledby": "basic-button",
+        }}
+      >
+        <Stack spacing={1} px={1}>
+          {Message_Options.map((el) => (
+            <MenuItem
+              onClick={() => {
+                handleClick();
+              }}
+            >
+              {el.title}
+            </MenuItem>
+          ))}
+        </Stack>
+      </Menu>
+    </>
+  );
+};
+export { Timeline, Textmsg, Imgmsg, Replymsg, Linkmsg, Docmsg, MessageMenu };

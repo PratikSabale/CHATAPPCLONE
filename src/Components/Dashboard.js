@@ -4,6 +4,8 @@ import {
   Divider,
   IconButton,
   ListItemButton,
+  Menu,
+  MenuItem,
   Stack,
   styled,
   Switch,
@@ -13,7 +15,7 @@ import {
 import React from "react";
 import logo from "../../src/Assets/images/logo.png";
 import { faker } from "@faker-js/faker";
-import { Nav_Butons } from "../Data/Data";
+import { Nav_Butons, User_Profile } from "../Data/Data";
 import { Gear } from "phosphor-react";
 import { useNavigate } from "react-router-dom";
 import GeneralApp from "./GeneralApp";
@@ -70,6 +72,15 @@ function Dashboard() {
   const theme = useTheme();
 
   const [selected, setSelected] = React.useState(0);
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <Stack direction={"row"}>
@@ -161,7 +172,48 @@ function Dashboard() {
             </Stack>
           </Stack>
           <Stack alignItems="center" spacing={3} p={2}>
-            <AntSwitch /> <Avatar src={faker.image.avatar()} />
+            <AntSwitch />
+
+            <Avatar
+              id="basic-button"
+              aria-controls={open ? "basic-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+              src={faker.image.avatar()}
+            />
+
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+              transformOrigin={{ vertical: "bottom", horizontal: "left" }}
+            >
+              <Stack spacing={1} px={1}>
+                {User_Profile.map((el) => (
+                  <MenuItem
+                    onClick={() => {
+                      handleClick();
+                    }}
+                  >
+                    <Stack
+                      sx={{ width: 100 }}
+                      direction={"row"}
+                      alignItems={"center"}
+                      justifyContent={"space-between"}
+                    >
+                      <span> {el.title}</span>
+                      {el.icon}
+                    </Stack>
+                  </MenuItem>
+                ))}
+              </Stack>
+            </Menu>
           </Stack>
         </Stack>
       </Box>

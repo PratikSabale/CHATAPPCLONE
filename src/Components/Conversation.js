@@ -4,11 +4,13 @@ import {
   Badge,
   Box,
   Divider,
+  Fab,
   IconButton,
   InputAdornment,
   Stack,
   styled,
   TextField,
+  Tooltip,
   Typography,
   useTheme,
 } from "@mui/material";
@@ -22,7 +24,7 @@ import {
   VideoCamera,
 } from "phosphor-react";
 import React from "react";
-import { Chat_History } from "../Data/Data";
+import { Actions, Chat_History } from "../Data/Data";
 import {
   Docmsg,
   Imgmsg,
@@ -31,6 +33,9 @@ import {
   Textmsg,
   Timeline,
 } from "./MsgType";
+import Picker from "@emoji-mart/react";
+import data from "@emoji-mart/data";
+
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
     backgroundColor: "#44b700",
@@ -68,6 +73,9 @@ const StyledInput = styled(TextField)(({ theme }) => ({
 }));
 const Conversation = () => {
   const theme = useTheme();
+  const [openPiker, setOpenPiker] = React.useState(false);
+  const [openActions, setOpenActions] = React.useState(false);
+
   return (
     <Stack height={"100%"} maxHeight={"100vh"} width={"auto"}>
       <Box
@@ -162,28 +170,72 @@ const Conversation = () => {
         }}
       >
         <Stack direction={"row"} alignItems={"center"} spacing={3}>
-          <StyledInput
-            fullWidth
-            placeholder="Write a message..."
-            variant="filled"
-            InputProps={{
-              disableUnderline: true,
-              startAdornment: (
-                <InputAdornment>
-                  <IconButton>
-                    <Link />
-                  </IconButton>
-                </InputAdornment>
-              ),
-              endAdornment: (
-                <InputAdornment>
-                  <IconButton>
-                    <Smiley />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
+          <Stack sx={{ width: "100%" }}>
+            <Box
+              sx={{
+                display: openPiker ? "inline" : "none",
+                zIndex: 10,
+                position: "fixed",
+                bottom: 81,
+                right: 100,
+              }}
+            >
+              <Picker data={data} onEmojiSelect={console.log} />
+            </Box>
+
+            <StyledInput
+              fullWidth
+              placeholder="Write a message..."
+              variant="filled"
+              InputProps={{
+                disableUnderline: true,
+                startAdornment: (
+                  <Stack sx={{ width: "max-content" }}>
+                    <Stack
+                      sx={{
+                        display: openActions ? "inline" : "none",
+                        position: "relative",
+                      }}
+                    >
+                      {Actions.map((el) => (
+                        <Tooltip title={el.title} placement="right">
+                          <Fab
+                            sx={{
+                              position: "absolute",
+                              top: -el.y,
+                              backgroundColor: el.color,
+                            }}
+                          >
+                            {el.icon}
+                          </Fab>
+                        </Tooltip>
+                      ))}
+                    </Stack>
+                    <InputAdornment>
+                      <IconButton
+                        onClick={() => {
+                          setOpenActions((prev) => !prev);
+                        }}
+                      >
+                        <Link />
+                      </IconButton>
+                    </InputAdornment>
+                  </Stack>
+                ),
+                endAdornment: (
+                  <InputAdornment>
+                    <IconButton
+                      onClick={() => {
+                        setOpenPiker((prev) => !prev);
+                      }}
+                    >
+                      <Smiley />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Stack>
 
           <Box
             sx={{
