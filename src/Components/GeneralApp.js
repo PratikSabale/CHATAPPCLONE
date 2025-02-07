@@ -11,7 +11,7 @@ function GeneralApp() {
         sx={{
           height: "100%",
           width: "calc(100vw - 450px)",
-          backgroundColor: "white",
+          backgroundColor: "#F0F4FA",
         }}
       >
         <Conversation />

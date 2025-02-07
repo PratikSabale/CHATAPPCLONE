@@ -1,5 +1,152 @@
-import { Box, Divider, Stack, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  Divider,
+  IconButton,
+  Link,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
+import { DownloadSimple, Image } from "phosphor-react";
 import React from "react";
+
+const Docmsg = ({ el }) => {
+  const theme = useTheme();
+  return (
+    <Stack direction={"row"} justifyContent={el.incoming ? "start" : "end"}>
+      <Box
+        p={1.5}
+        sx={{
+          backgroundColor: el.incoming
+            ? theme.palette.background.default
+            : theme.palette.primary.main,
+          borderRadius: 1.5,
+          width: "max-content",
+        }}
+      >
+        <Stack spacing={2}>
+          <Stack
+            padding={2}
+            spacing={3}
+            direction={"row"}
+            alignItems={"center"}
+            sx={{
+              backgroundColor: theme.palette.background.paper,
+              borderRadius: 1,
+            }}
+          >
+            <Image size={48} />
+            <Typography variant="caption">Abstract.png</Typography>
+            <IconButton>
+              <DownloadSimple />
+            </IconButton>
+          </Stack>
+          <Typography
+            variant="body2"
+            color={el.incoming ? theme.palette.text : "white"}
+          >
+            {el.message}
+          </Typography>
+        </Stack>
+      </Box>
+    </Stack>
+  );
+};
+
+const Linkmsg = ({ el }) => {
+  const theme = useTheme();
+  return (
+    <Stack direction={"row"} justifyContent={el.incoming ? "start" : "end"}>
+      <Box
+        p={1.5}
+        sx={{
+          backgroundColor: el.incoming
+            ? theme.palette.background.default
+            : theme.palette.primary.main,
+          borderRadius: 1.5,
+          width: "max-content",
+        }}
+      >
+        <Stack spacing={2}>
+          <Stack
+            p={2}
+            spacing={3}
+            alignItems={"start"}
+            sx={{
+              backgroundColor: theme.palette.background.paper,
+              borderRadius: 1,
+            }}
+          >
+            <img
+              src={el.preview}
+              style={{ maxHeight: 210, borderRadius: "10px" }}
+            />
+            <Stack spacing={2}>
+              <Typography variant="subtitle2">Creating Chatting app</Typography>
+              <Typography
+                sx={{ backgroundColor: theme.palette.background.main }}
+                variant="subtitle2"
+                component={Link}
+                to="https://www.youtube.com/"
+              >
+                www.pratikchatapp.com
+              </Typography>
+            </Stack>
+            <Typography
+              variant="body2"
+              color={el.incoming ? theme.palette.text : "white"}
+            >
+              {el.message}
+            </Typography>
+          </Stack>
+        </Stack>
+      </Box>
+    </Stack>
+  );
+};
+
+const Replymsg = ({ el }) => {
+  const theme = useTheme();
+  return (
+    <Stack direction={"row"} justifyContent={el.incoming ? "start" : "end"}>
+      <Box
+        p={1.5}
+        sx={{
+          backgroundColor: el.incoming
+            ? theme.palette.background.default
+            : theme.palette.primary.main,
+          borderRadius: 1.5,
+          width: "max-content",
+        }}
+      >
+        {" "}
+        <Stack spacing={2}>
+          <Stack
+            p={2}
+            direction={"column"}
+            spacing={3}
+            alignItems={"center"}
+            sx={{
+              backgroundColor: theme.palette.background.paper,
+              borderRadius: 1,
+            }}
+          >
+            <Typography variant="body2" color={theme.palette.text}>
+              {" "}
+              {el.message}
+            </Typography>
+          </Stack>
+          <Typography
+            variant="body2"
+            color={el.incoming ? theme.palette.text : "white"}
+          >
+            {el.reply}
+          </Typography>
+        </Stack>
+      </Box>
+    </Stack>
+  );
+};
 
 const Imgmsg = ({ el }) => {
   const theme = useTheme();
@@ -71,4 +218,4 @@ const Timeline = ({ el }) => {
   );
 };
 
-export { Timeline, Textmsg, Imgmsg };
+export { Timeline, Textmsg, Imgmsg, Replymsg, Linkmsg, Docmsg };

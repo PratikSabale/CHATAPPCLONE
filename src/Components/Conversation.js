@@ -23,7 +23,14 @@ import {
 } from "phosphor-react";
 import React from "react";
 import { Chat_History } from "../Data/Data";
-import { Imgmsg, Textmsg, Timeline } from "./MsgType";
+import {
+  Docmsg,
+  Imgmsg,
+  Linkmsg,
+  Replymsg,
+  Textmsg,
+  Timeline,
+} from "./MsgType";
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
     backgroundColor: "#44b700",
@@ -110,7 +117,7 @@ const Conversation = () => {
           </Stack>
         </Stack>
       </Box>
-      <Box sx={{ flexGrow: 1 }}>
+      <Box sx={{ flexGrow: 1, overflowY: "scroll", overflowX: "hidden" }}>
         <Box p={3}>
           <Stack spacing={3}>
             {Chat_History.map((el) => {
@@ -125,13 +132,14 @@ const Conversation = () => {
 
                     case "doc":
                       //doc
-                      break;
+                      return <Docmsg el={el} />;
                     case "link":
                       //link
-                      break;
+                      return <Linkmsg el={el} />;
+
                     case "reply":
                       //reply
-                      break;
+                      return <Replymsg el={el} />;
 
                     default:
                       return <Textmsg el={el} />;

@@ -154,8 +154,8 @@ export const Chat_History = [
   {
     type: "msg",
     subtype: "link",
-    // preview: faker.image.cats(),
-    message: "Yep ,I can alsp do that",
+    preview: faker.image.avatar(),
+    message: "Yep ,I can also do that",
     incoming: true,
     outgoing: false,
   },
